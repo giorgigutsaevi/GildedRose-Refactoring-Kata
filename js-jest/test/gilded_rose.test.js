@@ -50,12 +50,12 @@ describe("Gilded Rose", function () {
       expect(agedBrie.quality).toEqual(40)
     })
 
-    it("Checks the quality of any item never exceeds 50", () => {
+    it("Checks the quality of any item never exceeds 50 - a maximum amount of quality", () => {
       shop.addItem(agedBrie);
-      Array.from({ length: 50 }, () => {
+      Array.from({ length: 70 }, () => {
         shop.updateQuality()
       });
-      expect(agedBrie.quality).toEqual(50)
+      expect(agedBrie.quality).toEqual(shop.MAXIMUM_QUALITY )
     })
 
     it("Sulfuras being the item of the gods never has to be sold or decreased in Quality", () => {

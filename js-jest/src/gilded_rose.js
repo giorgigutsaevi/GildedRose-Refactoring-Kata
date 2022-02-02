@@ -9,6 +9,7 @@ class Item {
 class Shop {
   constructor(items=[]){
     this.items = items;
+    this.MAXIMUM_QUALITY = 50;
   }
 
   addItem(...items){
@@ -30,16 +31,16 @@ class Shop {
         }
 
       } else { 
-        if (this.items[i].quality < 50) {
+        if (this.items[i].quality < this.MAXIMUM_QUALITY) {
           this.items[i].quality++;
           if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
             if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < 50) {
+              if (this.items[i].quality < this.MAXIMUM_QUALITY) {
                 this.items[i].quality++;
               }
             }
             if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < 50) {
+              if (this.items[i].quality < this.MAXIMUM_QUALITY) {
                 this.items[i].quality++;
               }
             }
@@ -61,7 +62,7 @@ class Shop {
             this.items[i].quality = 0;
           }
         } else {
-          if (this.items[i].quality < 50) {
+          if (this.items[i].quality < this.MAXIMUM_QUALITY) {
             this.items[i].quality++;
           }
         }

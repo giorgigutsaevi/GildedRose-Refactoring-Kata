@@ -78,6 +78,17 @@ describe("Gilded Rose", function () {
       expect(backstagePasses.quality).toEqual(19)
       expect(backstagePasses.sellIn).toEqual(2)
     })
+    
+    it("Backstage Passes Quality drops to zero after the concert", () => {
+      let backstagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 0)
+      shop.addItem(backstagePasses);
+      // After 6 day passes, the quality of Backstage passes should be 0
+      Array.from({ length: 6}, () => {
+        shop.updateQuality();
+      });
+      expect(backstagePasses.quality).toEqual(0)
+      expect(backstagePasses.sellIn).toEqual(-1)
+    })
   })
 
   describe("_invalidQuality", () => {

@@ -67,16 +67,7 @@ class Shop {
   
 }
 
-// let arr = ['tabasco', 'valentina', 'cholula', 'Rooster Sriracha'];
 
-// arr.forEach((item, idx) =>{
-//   console.log(item,'index:' + idx);
-// })
-
-// for (let i = 0; i <= arr.length; i++){
-//   console.log(arr[i]);
-//   console.log(i);
-// }
 
 module.exports = {
   Item,

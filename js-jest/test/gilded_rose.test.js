@@ -52,11 +52,20 @@ describe("Gilded Rose", function () {
 
     it("Checks the quality of any item never exceeds 50", () => {
       shop.addItem(agedBrie);
-      // Imitating that 10 days have passed, so quality of 'Aged Brie' now should be 40
       Array.from({ length: 50 }, () => {
         shop.updateQuality()
       });
       expect(agedBrie.quality).toEqual(50)
+    })
+
+    it("Sulfuras being the item of the gods never has to be sold or decreased in Quality", () => {
+      let sulfuras = new Item("Sulfuras, Hand of Ragnaros", 20, 20)
+      shop.addItem(sulfuras);
+      Array.from({ length: 20 }, () => {
+        shop.updateQuality()
+      });
+      expect(sulfuras.quality).toEqual(20)
+      expect(sulfuras.sellIn).toEqual(20)
     })
   })
 

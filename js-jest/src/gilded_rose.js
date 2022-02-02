@@ -14,6 +14,7 @@ class Shop {
   addItem(...items){
     this.items.push(...items)
   }
+  
 
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
@@ -63,6 +64,12 @@ class Shop {
     }
 
     return this.items;
+  }
+
+  _invalidQuality(item){
+    if(item.quality < 0){
+      throw new Error("Quality can't be negative!")
+    }
   }
   
 }

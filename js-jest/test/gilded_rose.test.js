@@ -31,14 +31,27 @@ describe("Gilded Rose", function() {
     })
 
     it('Once the sell by date has passed, quality degrades twice as fast', ()=>{
-      let item = new Item('soup', 2, 20);
+      let item = new Item('apple', 2, 20);
       shop.addItem(item)
       Array.from({length: 4}, () => {
-        shop.updateQuality(item)
+        shop.updateQuality()
       });
       expect(item.quality).toEqual(14)
     })
-
   })
+
+  describe("_invalidQuality", ()=>{
+    let shop;
+    beforeEach(()=>{
+      shop = new Shop();
+    })
+
+    it("raises an error if the quality of an item is negative", ()=>{
+      let badItem = new Item('banana', 5, -5);
+      expect(() => {
+        shop._invalidQuality(badItem)
+      }).toThrow("Quality can't be negative!");
+    });
+  });
 
 });

@@ -10,6 +10,11 @@ class Shop {
   constructor(items=[]){
     this.items = items;
   }
+
+  addItem(...items){
+    this.items.push(...items)
+  }
+
   updateQuality() {
     for (let i = 0; i < this.items.length; i++) {
       if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
@@ -59,7 +64,19 @@ class Shop {
 
     return this.items;
   }
+  
 }
+
+// let arr = ['tabasco', 'valentina', 'cholula', 'Rooster Sriracha'];
+
+// arr.forEach((item, idx) =>{
+//   console.log(item,'index:' + idx);
+// })
+
+// for (let i = 0; i <= arr.length; i++){
+//   console.log(arr[i]);
+//   console.log(i);
+// }
 
 module.exports = {
   Item,

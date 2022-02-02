@@ -24,6 +24,11 @@ class Shop {
             this.items[i].quality = this.items[i].quality - 1;
           }
         }
+        else {
+        // I decided to put this in, as if the item quality is negative, it just stays negative
+        this._invalidQuality(this.items[i])
+        }
+
       } else {
         if (this.items[i].quality < 50) {
           this.items[i].quality = this.items[i].quality + 1;

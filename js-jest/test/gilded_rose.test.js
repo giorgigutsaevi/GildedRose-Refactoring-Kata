@@ -67,6 +67,17 @@ describe("Gilded Rose", function () {
       expect(sulfuras.quality).toEqual(20)
       expect(sulfuras.sellIn).toEqual(20)
     })
+
+    it("Backstage Passes like Aged Brie increases in quality as its Sellin value approaches", () => {
+      let backstagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10)
+      shop.addItem(backstagePasses);
+      // After 3 day passes, the quality of Backstage passes should = 19
+      Array.from({ length: 3}, () => {
+        shop.updateQuality();
+      });
+      expect(backstagePasses.quality).toEqual(19)
+      expect(backstagePasses.sellIn).toEqual(2)
+    })
   })
 
   describe("_invalidQuality", () => {

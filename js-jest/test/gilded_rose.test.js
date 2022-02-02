@@ -49,6 +49,15 @@ describe("Gilded Rose", function () {
       });
       expect(agedBrie.quality).toEqual(40)
     })
+
+    it("Checks the quality of any item never exceeds 50", () => {
+      shop.addItem(agedBrie);
+      // Imitating that 10 days have passed, so quality of 'Aged Brie' now should be 40
+      Array.from({ length: 50 }, () => {
+        shop.updateQuality()
+      });
+      expect(agedBrie.quality).toEqual(50)
+    })
   })
 
   describe("_invalidQuality", () => {

@@ -20,19 +20,19 @@ class Shop {
   updateQuality() {
     this.items.forEach((item, idx) => {
       if(item.name == 'Aged Brie'){
-        if(item.quality < this.MAXIMUM_QUALITY){
+        if(this._isBelowMaximum(item.quality)){
           item.quality++;
           item.sellIn--;
         }
       }
       if(item.name === 'Backstage passes to a TAFKAL80ETC concert'){
-        if(item.sellIn <= 0 && item.quality < this.MAXIMUM_QUALITY){
+        if(item.sellIn <= 0 && this._isBelowMaximum(item.quality)){
           item.quality = 0;
           item.sellIn--;
-        }else if(item.sellIn < 6 && item.quality < this.MAXIMUM_QUALITY){
+        }else if(item.sellIn < 6 && this._isBelowMaximum(item.quality)){
           item.sellIn--;
           item.quality += 3;
-        }else if(item.sellIn < 11 && item.quality < this.MAXIMUM_QUALITY ){
+        }else if(item.sellIn < 11 && this._isBelowMaximum(item.quality)){
             item.sellIn--;
             item.quality += 2;
         }
@@ -54,6 +54,10 @@ class Shop {
     return this.items;
   }
 
+  _isBelowMaximum(num){
+    return num < this.MAXIMUM_QUALITY ? true : false
+  }  
+
   _invalidQuality(item){
     if(item.quality < 0){
       throw new Error("Quality can't be negative!")
@@ -61,7 +65,6 @@ class Shop {
   }
   
 }
-
 
 
 module.exports = {

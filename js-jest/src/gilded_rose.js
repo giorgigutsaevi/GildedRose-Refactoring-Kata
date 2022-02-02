@@ -18,57 +18,39 @@ class Shop {
   
 
   updateQuality() {
-    for (let i = 0; i < this.items.length; i++) {
-      if (this.items[i].name != 'Aged Brie' && this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-        if (this.items[i].quality > 0) {
-          if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-            this.items[i].quality--;
-          }
-        }
-        else {
-        // I decided to put this in, as if the item quality is negative, it just stays negative
-        this._invalidQuality(this.items[i])
-        }
-
-      } else { 
-        if (this.items[i].quality < this.MAXIMUM_QUALITY) {
-          this.items[i].quality++;
-          if (this.items[i].name == 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].sellIn < 11) {
-              if (this.items[i].quality < this.MAXIMUM_QUALITY) {
-                this.items[i].quality++;
-              }
-            }
-            if (this.items[i].sellIn < 6) {
-              if (this.items[i].quality < this.MAXIMUM_QUALITY) {
-                this.items[i].quality++;
-              }
-            }
-          }
+    this.items.forEach((item, idx) => {
+      if(item.name == 'Aged Brie'){
+        if(item.quality < this.MAXIMUM_QUALITY){
+          item.quality++;
+          item.sellIn--;
         }
       }
-      if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-        this.items[i].sellIn--;
-      }
-      if (this.items[i].sellIn < 0) {
-        if (this.items[i].name != 'Aged Brie') {
-          if (this.items[i].name != 'Backstage passes to a TAFKAL80ETC concert') {
-            if (this.items[i].quality > 0) {
-              if (this.items[i].name != 'Sulfuras, Hand of Ragnaros') {
-                this.items[i].quality--;
-              }
-            }
-          } else {
-            this.items[i].quality = 0;
-          }
-        } else {
-          if (this.items[i].quality < this.MAXIMUM_QUALITY) {
-            this.items[i].quality++;
-          }
+      if(item.name === 'Backstage passes to a TAFKAL80ETC concert'){
+        if(item.sellIn <= 0 && item.quality < this.MAXIMUM_QUALITY){
+          item.quality = 0;
+          item.sellIn--;
+        }else if(item.sellIn < 6 && item.quality < this.MAXIMUM_QUALITY){
+          item.sellIn--;
+          item.quality += 3;
+        }else if(item.sellIn < 11 && item.quality < this.MAXIMUM_QUALITY ){
+            item.sellIn--;
+            item.quality += 2;
         }
       }
-    }
-
+      if(item.name === "Sulfuras, Hand of Ragnaros"){
+        item.sellIn == item.sellIn;
+        item.quality == item.quality;
+      }
+      if(item.name !== 'Aged Brie' && item.name !== 'Backstage passes to a TAFKAL80ETC concert' && item.name !== "Sulfuras, Hand of Ragnaros" ){
+        if(item.sellIn > 0 && item.quality > 0){
+          item.quality--;
+          item.sellIn--;
+        }else{
+          item.quality -= 2;
+        }
+      
+      }
+    })
     return this.items;
   }
 

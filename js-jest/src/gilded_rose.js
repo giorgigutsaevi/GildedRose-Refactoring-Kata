@@ -18,32 +18,40 @@ class Shop {
     this.items.push(...items)
   }
   
-
   update() {
     this.items.forEach((item) => {
-      if(this._isAgedBrie(item.name)){
-        if(this._isBelowMaximum(item.quality)){
+
+      if(this._isConjured(item.name)){
+        if((this._isQualityBelowMaximum(item.quality))){
+          item.sellIn--;
+          item.quality -= 2;
+        }
+      }
+
+      else if(this._isAgedBrie(item.name)){
+        if(this._isQualityBelowMaximum(item.quality)){
           item.quality++;
           item.sellIn--;
         }
       }
-      if(this._isBackstagePasses(item.name)){
-        if(item.sellIn <= 0 && this._isBelowMaximum(item.quality)){
+      else if(this._isBackstagePasses(item.name)){
+        if(item.sellIn <= 0 && this._isQualityBelowMaximum(item.quality)){
           item.quality = 0;
           item.sellIn--;
-        }else if(item.sellIn < 6 && this._isBelowMaximum(item.quality)){
+        }else if(item.sellIn < 6 && this._isQualityBelowMaximum(item.quality)){
           item.sellIn--;
           item.quality += 3;
-        }else if((item.sellIn > 6 && item.sellIn < 11) && this._isBelowMaximum(item.quality)){
+        }else if((item.sellIn > 6 && item.sellIn < 11) && this._isQualityBelowMaximum(item.quality)){
             item.sellIn--;
             item.quality += 2;
         }
       }
-      if(this._isSulfuras(item.name)){
+      else if(this._isSulfuras(item.name)){
         item.sellIn == item.sellIn;
         item.quality == item.quality;
       }
-      if(this._isRegularItem(item.name)){
+      else{
+        (this._isRegularItem(item.name))
         if(item.sellIn > 0 && item.quality > 0){
           item.quality--;
           item.sellIn--;
@@ -57,9 +65,8 @@ class Shop {
   }
 
   // private helper methods for my Shop class
-
   _isConjured(itemName){
-
+    return itemName.split(" ").map(word => word).some(word => word === "Conjured")
   }
   
   _isSulfuras(itemName){
@@ -82,7 +89,7 @@ class Shop {
     return !specialItems.includes(itemName) ? true : false;
   }
 
-  _isBelowMaximum(num){
+  _isQualityBelowMaximum(num){
     return num < this.MAXIMUM_QUALITY ? true : false
   }  
 
@@ -91,7 +98,6 @@ class Shop {
       throw new Error("Quality can't be negative!")
     }
   }
-  
 }
 
 

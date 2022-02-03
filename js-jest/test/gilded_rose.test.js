@@ -1,3 +1,4 @@
+const ConjuredItem = require("../src/conjured");
 const { Shop, Item } = require("../src/gilded_rose");
 
 describe("Gilded Rose", function () {
@@ -100,6 +101,17 @@ describe("Gilded Rose", function () {
       expect(backstagePasses.quality).toEqual(0)
       expect(backstagePasses.sellIn).toEqual(-1)
     })
+
+    it("Conjured Items Quality degrades twice as fast as normal items", () => {
+      let conjured = new ConjuredItem("Conjured Mana Cake", 20, 20)
+      shop.addItem(conjured);
+      // After 3 day passes, the quality of Backstage passes should be 14
+      Array.from({ length: 3}, () => {
+        shop.update();
+      });
+      expect(conjured.sellIn).toEqual(17);
+      expect(conjured.quality).toEqual(14)
+    })
   })
 
   describe("_invalidQuality", () => {
@@ -113,6 +125,25 @@ describe("Gilded Rose", function () {
       expect(() => {
         shop._invalidQuality(badItem)
       }).toThrow("Quality can't be negative!");
+    });
+  });
+
+  describe("_isConjured", () => {
+    let shop;
+    beforeEach(() => {
+      shop = new Shop();
+    })
+
+    it("returns true if the item includes 'Conjured' in it", () => {
+      let conjured = new ConjuredItem('Conjured Mana Cake', 20, 20);
+      shop.addItem(conjured);
+      expect(shop._isConjured(conjured.name)).toEqual(true)
+    });
+
+    it("returns false if the item DOES NOT include 'Conjured' in it", () => {
+      let conjured = new ConjuredItem('Awesome Mana Cake', 20, 20);
+      shop.addItem(conjured);
+      expect(shop._isConjured(conjured.name)).toEqual(false)
     });
   });
 

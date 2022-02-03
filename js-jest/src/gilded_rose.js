@@ -17,7 +17,7 @@ class Shop {
   }
   
 
-  updateQuality() {
+  update() {
     this.items.forEach((item) => {
       if(this._isAgedBrie(item.name)){
         if(this._isBelowMaximum(item.quality)){

@@ -63,7 +63,6 @@ class Shop {
     })
     return this.items;
   }
-
   // private helper methods for my Shop class
   _isConjured(itemName){
     return itemName.split(" ").map(word => word).some(word => word === "Conjured")

@@ -41,7 +41,7 @@ class Shop {
         item.sellIn == item.sellIn;
         item.quality == item.quality;
       }
-      if(item.name !== 'Aged Brie' && item.name !== 'Backstage passes to a TAFKAL80ETC concert' && item.name !== "Sulfuras, Hand of Ragnaros" ){
+      if(this._isRegularItem(item.name)){
         if(item.sellIn > 0 && item.quality > 0){
           item.quality--;
           item.sellIn--;
@@ -52,6 +52,15 @@ class Shop {
       }
     })
     return this.items;
+  }
+  
+  _isRegularItem(itemName){
+    const specialItems = [
+      'Aged Brie',
+      'Backstage passes to a TAFKAL80ETC concert',
+      'Sulfuras, Hand of Ragnaros'
+    ]
+    return !specialItems.includes(itemName) ? true : false;
   }
 
   _isBelowMaximum(num){

@@ -1,9 +1,13 @@
-const ConjuredItem = require("../src/conjured");
 const { Shop, Item } = require("../src/gilded_rose");
 
 describe("Gilded Rose", function () {
   it("should foo", function () {
-    const gildedRose = new Shop([new Item("foo", 0, 0)]);
+    const item = {
+      name: "foo",
+      sellIn: 0, 
+      quality: 0
+    }
+    const gildedRose = new Shop([item]);
     const items = gildedRose.update();
     expect(items[0].name).toBe("foo");
   });

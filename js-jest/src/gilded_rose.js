@@ -18,14 +18,14 @@ class Shop {
   
 
   updateQuality() {
-    this.items.forEach((item, idx) => {
-      if(item.name == 'Aged Brie'){
+    this.items.forEach((item) => {
+      if(this._isAgedBrie(item.name)){
         if(this._isBelowMaximum(item.quality)){
           item.quality++;
           item.sellIn--;
         }
       }
-      if(item.name === 'Backstage passes to a TAFKAL80ETC concert'){
+      if(this._isBackstagePasses(item.name)){
         if(item.sellIn <= 0 && this._isBelowMaximum(item.quality)){
           item.quality = 0;
           item.sellIn--;
@@ -37,7 +37,7 @@ class Shop {
             item.quality += 2;
         }
       }
-      if(item.name === "Sulfuras, Hand of Ragnaros"){
+      if(this._isSulfuras(item.name)){
         item.sellIn == item.sellIn;
         item.quality == item.quality;
       }
@@ -53,7 +53,19 @@ class Shop {
     })
     return this.items;
   }
-  
+
+  // private helper methods for my Shop class
+  _isSulfuras(itemName){
+    return itemName === "Sulfuras, Hand of Ragnaros"
+  }
+
+  _isAgedBrie(itemName){
+    return itemName === "Aged Brie"
+  }
+  _isBackstagePasses(itemName){
+    return itemName === "Backstage passes to a TAFKAL80ETC concert"
+  }
+
   _isRegularItem(itemName){
     const specialItems = [
       'Aged Brie',

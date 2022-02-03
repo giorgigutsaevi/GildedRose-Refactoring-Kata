@@ -1,3 +1,5 @@
+const ConjuredItem = require("./conjured");
+
 class Item {
   constructor(name, sellIn, quality){
     this.name = name;
@@ -55,6 +57,11 @@ class Shop {
   }
 
   // private helper methods for my Shop class
+
+  _isConjured(itemName){
+
+  }
+  
   _isSulfuras(itemName){
     return itemName === "Sulfuras, Hand of Ragnaros"
   }

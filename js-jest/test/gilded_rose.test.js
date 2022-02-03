@@ -201,3 +201,19 @@ describe("Gilded Rose", function () {
   });
 
 });
+
+describe("Item class", () => {
+  let item;
+  beforeEach( () =>{
+    item = new Item("Bad Juju's voodoo doll", 20, 20);
+  })
+  it("creates an instance of itself", ()=>{
+    expect(item).toBeInstanceOf(Item)
+  })
+
+  it("instances are created with various attributes", ()=>{
+    expect(item.name).toEqual("Bad Juju's voodoo doll");
+    expect(item.sellIn).toEqual(20);
+    expect(item.quality).toEqual(20);
+  })
+})

@@ -32,7 +32,7 @@ class Shop {
         }else if(item.sellIn < 6 && this._isBelowMaximum(item.quality)){
           item.sellIn--;
           item.quality += 3;
-        }else if(item.sellIn < 11 && this._isBelowMaximum(item.quality)){
+        }else if((item.sellIn > 6 && item.sellIn < 11) && this._isBelowMaximum(item.quality)){
             item.sellIn--;
             item.quality += 2;
         }

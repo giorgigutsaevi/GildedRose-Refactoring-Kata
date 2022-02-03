@@ -3,7 +3,7 @@ const { Shop, Item } = require("../src/gilded_rose");
 describe("Gilded Rose", function () {
   it("should foo", function () {
     const gildedRose = new Shop([new Item("foo", 0, 0)]);
-    const items = gildedRose.updateQuality();
+    const items = gildedRose.update();
     expect(items[0].name).toBe("foo");
   });
 
@@ -24,7 +24,7 @@ describe("Gilded Rose", function () {
     })
   })
 
-  describe("updateQuality()", () => {
+  describe("update()", () => {
     let shop;
     let agedBrie;
     beforeEach(() => {
@@ -36,7 +36,7 @@ describe("Gilded Rose", function () {
       let item = new Item('apple', 2, 20);
       shop.addItem(item);
       Array.from({ length: 4 }, () => {
-        shop.updateQuality()
+        shop.update()
       });
       expect(item.quality).toEqual(14)
     });
@@ -45,7 +45,7 @@ describe("Gilded Rose", function () {
       shop.addItem(agedBrie);
       // Imitating that 10 days have passed, so quality of 'Aged Brie' now should be 40
       Array.from({ length: 10 }, () => {
-        shop.updateQuality()
+        shop.update()
       });
       expect(agedBrie.quality).toEqual(40)
     })
@@ -53,7 +53,7 @@ describe("Gilded Rose", function () {
     it("Checks the quality of any item never exceeds 50 - a maximum amount of quality", () => {
       shop.addItem(agedBrie);
       Array.from({ length: 70 }, () => {
-        shop.updateQuality()
+        shop.update()
       });
       expect(agedBrie.quality).toEqual(shop.MAXIMUM_QUALITY )
     })
@@ -62,21 +62,32 @@ describe("Gilded Rose", function () {
       let sulfuras = new Item("Sulfuras, Hand of Ragnaros", 20, 20)
       shop.addItem(sulfuras);
       Array.from({ length: 20 }, () => {
-        shop.updateQuality()
+        shop.update()
       });
       expect(sulfuras.quality).toEqual(20)
       expect(sulfuras.sellIn).toEqual(20)
     })
 
-    it("Backstage Passes like Aged Brie increases in quality as its Sellin value approaches", () => {
+    it("Backstage Passes like Aged Brie increases in quality (3x) as its Sellin value approaches", () => {
       let backstagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10)
       shop.addItem(backstagePasses);
       // After 3 day passes, the quality of Backstage passes should = 19
       Array.from({ length: 3}, () => {
-        shop.updateQuality();
+        shop.update();
       });
       expect(backstagePasses.quality).toEqual(19)
       expect(backstagePasses.sellIn).toEqual(2)
+    })
+
+    it("Backstage Passes like Aged Brie increases in quality (2x) as its Sellin value approaches", () => {
+      let backstagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10)
+      shop.addItem(backstagePasses);
+      // After 2 day passes, the quality of Backstage passes should = 14
+      Array.from({ length: 2}, () => {
+        shop.update();
+      });
+      expect(backstagePasses.quality).toEqual(14)
+      expect(backstagePasses.sellIn).toEqual(8)
     })
     
     it("Backstage Passes Quality drops to zero after the concert", () => {
@@ -84,7 +95,7 @@ describe("Gilded Rose", function () {
       shop.addItem(backstagePasses);
       // After 6 day passes, the quality of Backstage passes should be 0
       Array.from({ length: 6}, () => {
-        shop.updateQuality();
+        shop.update();
       });
       expect(backstagePasses.quality).toEqual(0)
       expect(backstagePasses.sellIn).toEqual(-1)

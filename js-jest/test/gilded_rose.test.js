@@ -15,8 +15,17 @@ describe("Gilded Rose", function () {
 
     beforeEach(() => {
       shop = new Shop();
-      cheese = new Item("Gruyere", 0, 0);
-      beer = new Item("Guiness", 0, 0);
+      cheeseDouble = {
+        name: "Gruyere",
+        sellIn: 0, 
+        quality: 0
+      }
+      beerDouble = {
+        name: "Guiness",
+        sellIn: 0, 
+        quality: 0
+      }
+
     })
 
     it('adds any number of items into the items array', () => {
@@ -27,90 +36,118 @@ describe("Gilded Rose", function () {
 
   describe("update()", () => {
     let shop;
-    let agedBrie;
+    let agedBrieDbl;
     beforeEach(() => {
       shop = new Shop();
-      agedBrie = new Item("Aged Brie", 20, 30)
+      agedBrieDbl = {
+        name: "Aged Brie",
+        sellIn: 20, 
+        quality: 30
+      }
     })
 
     it('Once the sell by date has passed, quality degrades twice as fast', () => {
-      let item = new Item('apple', 2, 20);
-      shop.addItem(item);
+      let itemDbl = {
+        name: "apple",
+        sellIn: 2, 
+        quality: 20
+      }
+      shop.addItem(itemDbl);
       Array.from({ length: 4 }, () => {
         shop.update()
       });
-      expect(item.quality).toEqual(14)
+      expect(itemDbl.quality).toEqual(14)
     });
 
     it("The quality of 'Aged Brie' increases in quality as sellIn decreases", () => {
-      shop.addItem(agedBrie);
+      shop.addItem(agedBrieDbl);
       // Imitating that 10 days have passed, so quality of 'Aged Brie' now should be 40
       Array.from({ length: 10 }, () => {
         shop.update()
       });
-      expect(agedBrie.quality).toEqual(40)
+      expect(agedBrieDbl.quality).toEqual(40)
     })
 
     it("Checks the quality of any item never exceeds 50 - a maximum amount of quality", () => {
-      shop.addItem(agedBrie);
+      shop.addItem(agedBrieDbl);
       Array.from({ length: 70 }, () => {
         shop.update()
       });
-      expect(agedBrie.quality).toEqual(shop.MAXIMUM_QUALITY )
+      expect(agedBrieDbl.quality).toEqual(shop.MAXIMUM_QUALITY )
     })
 
     it("Sulfuras being the item of the gods never has to be sold or decreased in Quality", () => {
-      let sulfuras = new Item("Sulfuras, Hand of Ragnaros", 20, 20)
-      shop.addItem(sulfuras);
+      let sulfurasDbl = {
+        name: "Sulfuras, Hand of Ragnaros",
+        sellIn: 20, 
+        quality: 20
+      }
+      shop.addItem(sulfurasDbl);
       Array.from({ length: 20 }, () => {
         shop.update()
       });
-      expect(sulfuras.quality).toEqual(20)
-      expect(sulfuras.sellIn).toEqual(20)
+      expect(sulfurasDbl.quality).toEqual(20)
+      expect(sulfurasDbl.sellIn).toEqual(20)
     })
 
     it("Backstage Passes like Aged Brie increases in quality (3x) as its Sellin value approaches", () => {
-      let backstagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10)
-      shop.addItem(backstagePasses);
+      let backstagePassesDbl = {
+        name: "Backstage passes to a TAFKAL80ETC concert",
+        sellIn: 5, 
+        quality: 10
+      }
+      shop.addItem(backstagePassesDbl);
       // After 3 day passes, the quality of Backstage passes should = 19
       Array.from({ length: 3}, () => {
         shop.update();
       });
-      expect(backstagePasses.quality).toEqual(19)
-      expect(backstagePasses.sellIn).toEqual(2)
+      expect(backstagePassesDbl.quality).toEqual(19)
+      expect(backstagePassesDbl.sellIn).toEqual(2)
     })
 
     it("Backstage Passes like Aged Brie increases in quality (2x) as its Sellin value approaches", () => {
-      let backstagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 10, 10)
-      shop.addItem(backstagePasses);
+      let backstagePassesDbl = {
+        name: "Backstage passes to a TAFKAL80ETC concert",
+        sellIn: 10, 
+        quality: 10
+      }
+      shop.addItem(backstagePassesDbl);
       // After 2 day passes, the quality of Backstage passes should = 14
       Array.from({ length: 2}, () => {
         shop.update();
       });
-      expect(backstagePasses.quality).toEqual(14)
-      expect(backstagePasses.sellIn).toEqual(8)
+      expect(backstagePassesDbl.quality).toEqual(14)
+      expect(backstagePassesDbl.sellIn).toEqual(8)
     })
     
     it("Backstage Passes Quality drops to zero after the concert", () => {
-      let backstagePasses = new Item("Backstage passes to a TAFKAL80ETC concert", 5, 10)
-      shop.addItem(backstagePasses);
+      let backstagePassesDbl = {
+        name: "Backstage passes to a TAFKAL80ETC concert",
+        sellIn: 5, 
+        quality: 10
+      }
+      shop.addItem(backstagePassesDbl);
       // After 6 day passes, the quality of Backstage passes should be 0
       Array.from({ length: 6}, () => {
         shop.update();
       });
-      expect(backstagePasses.quality).toEqual(0)
-      expect(backstagePasses.sellIn).toEqual(-1)
+      expect(backstagePassesDbl.quality).toEqual(0)
+      expect(backstagePassesDbl.sellIn).toEqual(-1)
     })
 
     it("Conjured Items Quality degrades twice as fast as normal items", () => {
-      let conjured = new ConjuredItem("Conjured Mana Cake", 20, 20)
-      shop.addItem(conjured);
+      let conjureDbl = {
+        name: "Conjured Mana Cake",
+        sellIn: 20, 
+        quality: 20
+      }
+      shop.addItem(conjureDbl);
       // After 3 day passes, the quality of Backstage passes should be 14
       Array.from({ length: 3}, () => {
         shop.update();
       });
-      expect(conjured.sellIn).toEqual(17);
-      expect(conjured.quality).toEqual(14)
+      expect(conjureDbl.sellIn).toEqual(17);
+      expect(conjureDbl.quality).toEqual(14)
     })
   })
 
@@ -121,9 +158,13 @@ describe("Gilded Rose", function () {
     })
 
     it("raises an error if the quality of an item is negative", () => {
-      let badItem = new Item('banana', 5, -5);
+      let badItemDbl = {
+        name: "banana",
+        sellIn: 5, 
+        quality: -5
+      }
       expect(() => {
-        shop._invalidQuality(badItem)
+        shop._invalidQuality(badItemDbl)
       }).toThrow("Quality can't be negative!");
     });
   });
@@ -135,15 +176,23 @@ describe("Gilded Rose", function () {
     })
 
     it("returns true if the item includes 'Conjured' in it", () => {
-      let conjured = new ConjuredItem('Conjured Mana Cake', 20, 20);
-      shop.addItem(conjured);
-      expect(shop._isConjured(conjured.name)).toEqual(true)
+      let conjuredDbl = {
+        name: "Conjured Mana Cake",
+        sellIn: 20, 
+        quality: 20
+      }
+      shop.addItem(conjuredDbl);
+      expect(shop._isConjured(conjuredDbl.name)).toEqual(true)
     });
 
     it("returns false if the item DOES NOT include 'Conjured' in it", () => {
-      let conjured = new ConjuredItem('Awesome Mana Cake', 20, 20);
-      shop.addItem(conjured);
-      expect(shop._isConjured(conjured.name)).toEqual(false)
+      let conjuredDbl = {
+        name: "Awesome Mana Cake",
+        sellIn: 20, 
+        quality: 20
+      }
+      shop.addItem(conjuredDbl);
+      expect(shop._isConjured(conjuredDbl.name)).toEqual(false)
     });
   });
 
